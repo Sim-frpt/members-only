@@ -12,7 +12,7 @@ require('dotenv').config()
 const app = express();
 
 // DB connection
-mongoose.connect( process.env.MONGODB_URI, { 
+mongoose.connect( process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   }
@@ -32,6 +32,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// redirect bootstrap JS, CSS and jQuery
+app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
+app.use('/js', express.static(__dirname + '/node_modules/jquery/dist'));
+app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
 app.use('/', indexRouter);
 

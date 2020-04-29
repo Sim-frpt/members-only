@@ -2,7 +2,9 @@ const User = require('../models/user');
 const Message = require('../models/message');
 
 exports.home = (req, res, next) => {
-  res.send(`not implemented yet: ${req.method} ${req.path}`);
+  res.render('index', {
+    title: 'Members-only'
+  });
 };
 
 exports.getSignUp = (req, res, next) => {
