@@ -1,8 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
+// Controllers
 const indexController = require('../controllers/indexController');
 const sessionController = require('../controllers/sessionController');
+
+// Validation
+const signUpValidator = require('../services/sign-up-validator');
 
 // GET home page.
 router.get('/', indexController.home);
@@ -14,7 +18,7 @@ router.get('/about', indexController.getAbout);
 router.get('/sign-up', indexController.getSignUp);
 
 // POST sign up form
-router.post('/sign-up', indexController.postSignUp);
+router.post('/sign-up', signUpValidator(), indexController.postSignUp);
 
 // GET log in form
 router.get('/log-in', indexController.getLogIn);

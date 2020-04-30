@@ -1,6 +1,9 @@
 const User = require('../models/user');
 const Message = require('../models/message');
 
+const { validationResult } = require('express-validator');
+
+// GET home page
 exports.home =  async (req, res, next) => {
   const query = Message.find().sort('title').populate('author');
 
@@ -18,15 +21,32 @@ exports.home =  async (req, res, next) => {
   }
 };
 
+// GET about page
 exports.getAbout = (req, res, next) => {
   res.send(`not implemented yet: ${req.method} ${req.path}`);
 };
 
+// GET sign up form
 exports.getSignUp = (req, res, next) => {
   res.render('sign-up', { title: "Sign Up"});
 };
 
+// POST sign up form
 exports.postSignUp = (req, res, next) => {
+  const errors = validationResult(req);
+  console.log(errors.array());
+
+  if (!errors.isEmpty()) {
+    const { firstName, lastName, email } = req.body;
+
+    return res.render('sign-up', {
+      title: "Sign Up",
+      firstName,
+      lastName,
+      email,
+      //errors: errors.array()
+    });
+  }
   res.send(`not implemented yet: ${req.method} ${req.path}`);
 };
 
