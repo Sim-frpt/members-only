@@ -1,10 +1,24 @@
 const User = require('../models/user');
 const Message = require('../models/message');
 
-exports.home = (req, res, next) => {
-  res.render('index', {
-    title: 'Members-only'
-  });
+exports.home =  async (req, res, next) => {
+  const query = Message.find().sort('title').populate('author');
+
+  try {
+    const results = await query.exec();
+
+    res.render('index', {
+      title: 'Exclusive',
+      messages: results
+    });
+
+  } catch(err) {
+    return next(err);
+  }
+};
+
+exports.getAbout = (req, res, next) => {
+  res.send(`not implemented yet: ${req.method} ${req.path}`);
 };
 
 exports.getSignUp = (req, res, next) => {

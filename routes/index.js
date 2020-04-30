@@ -7,6 +7,9 @@ const sessionController = require('../controllers/sessionController');
 // GET home page.
 router.get('/', indexController.home);
 
+// GET about page.
+router.get('/about', indexController.getAbout);
+
 // GET sign up form
 router.get('/sign-up', indexController.getSignUp);
 
