@@ -23,7 +23,7 @@ exports.getAbout = (req, res, next) => {
 };
 
 exports.getSignUp = (req, res, next) => {
-  res.send(`not implemented yet: ${req.method} ${req.path}`);
+  res.render('sign-up', { title: "Sign Up"});
 };
 
 exports.postSignUp = (req, res, next) => {
@@ -40,7 +40,7 @@ exports.postLogIn = (req, res, next) => {
 
 
 exports.getMessage = (req, res, next) => {
-  res.render('message-form', { title: "Sign Up"});
+  res.send(`not implemented yet: ${req.method} ${req.path}`);
 };
 
 exports.postMessage = (req, res, next) => {
