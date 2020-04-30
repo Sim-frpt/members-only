@@ -138,12 +138,12 @@ function createAllMessages() {
     ),
     createMessage(
       'This club is insane',
-      'I can\'t stress enough how being part of this ELITE club has made my life a fairy tale.\n Such insane parties that all those poor non-members would like to attend hahaha',
+      'I can\'t stress enough how being part of this ELITE club has made my life a fairy tale.\n Such insane parties that all those poor non-members would like to attend hahaha.',
       users[0]
     ),
     createMessage(
       'I lost my underwear',
-      'As stated in the title, I lost my undies during our last "reunion".\n Hope someone will send them back to me. Hit me up i Need them!',
+      'As stated in the title, I lost my undies during our last "reunion".\n Hope someone will send them back to me. Hit me up I Need them!',
       users[4]
     )
   ]);

@@ -37,6 +37,15 @@ exports.postLogIn = (req, res, next) => {
   res.send(`not implemented yet: ${req.method} ${req.path}`);
 };
 
+
+exports.getMessage = (req, res, next) => {
+  res.send(`not implemented yet: ${req.method} ${req.path}`);
+};
+
+exports.postMessage = (req, res, next) => {
+  res.send(`not implemented yet: ${req.method} ${req.path}`);
+};
+
 exports.getMembers = (req, res, next) => {
   res.send(`not implemented yet: ${req.method} ${req.path}`);
 };

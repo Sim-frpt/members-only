@@ -9,4 +9,8 @@ const messageSchema = new Schema({
   { timestamps: true }
 );
 
+messageSchema.virtual('formatedDate').get(function () {
+  return this.createdAt.toLocaleString();
+});
+
 module.exports = mongoose.model("Message", messageSchema);

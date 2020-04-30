@@ -22,6 +22,12 @@ router.get('/log-in', indexController.getLogIn);
 // POST log in form
 router.get('/log-in', indexController.postLogIn);
 
+// GET message form
+router.get('/message', indexController.getMessage);
+
+// POST message form
+router.post('/message', indexController.postMessage);
+
 // GET members form
 router.get('/members', indexController.getMembers);
 
