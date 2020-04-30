@@ -9,6 +9,7 @@ exports.home =  async (req, res, next) => {
 
     res.render('index', {
       title: 'Exclusive',
+      template: 'index',
       messages: results
     });
 
@@ -39,7 +40,7 @@ exports.postLogIn = (req, res, next) => {
 
 
 exports.getMessage = (req, res, next) => {
-  res.send(`not implemented yet: ${req.method} ${req.path}`);
+  res.render('message-form', { title: "Sign Up"});
 };
 
 exports.postMessage = (req, res, next) => {

@@ -1,16 +1,12 @@
 <%- include('base/header'); %>
 <%- include('base/navbar'); %>
 
-<div class="container mb-5">
-  <h1><%= title %><span class="text-danger">.<span></h1>
-  <h4 class="mb-3">The message board for elite groups</h4>
-  <a class="btn btn-primary" href="/message">Post New Message</a>
-</div>
+<%- include('components/heading'); %>
 <div class="jumbotron">
   <h1 class="text-center mb-5">Latest posts</h1>
   <ul>
     <% messages.forEach(message => { %>
-      <%- include('card', { message }) %>
+      <%- include('components/card', { message }) %>
     <% }); %>
   </ul>
 </div>
