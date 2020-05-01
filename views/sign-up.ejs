@@ -1,5 +1,6 @@
 <%- include('base/header'); %>
 <%- include('base/navbar'); %>
+
 <%- include('components/heading.ejs'); %>
 
 <div class="container">
@@ -12,6 +13,9 @@
         id="firstName"
         name="firstName"
         placeholder="First Name"
+        required
+        minlength="2"
+        maxlength="30"
         value="<%= locals.firstName ? firstName.value : '' %>">
 
         <% if (locals.firstName && firstName.errorMsg) { %>
@@ -27,6 +31,9 @@
         id="lastName"
         name="lastName"
         placeholder="Last Name"
+        required
+        minlength="2"
+        maxlength="50"
         value="<%= locals.lastName ? lastName.value : '' %>">
 
         <% if (locals.lastName && lastName.errorMsg) { %>
@@ -42,6 +49,8 @@
         id="email"
         name="email"
         placeholder="Email"
+        required
+
         value="<%= locals.email ? email.value : '' %>">
 
         <% if (locals.email && email.errorMsg) { %>
@@ -56,6 +65,8 @@
         type="password"
         id="password"
         name="password"
+        required
+        minlength="8"
         placeholder="Password">
 
         <% if (locals.password && password.errorMsg) { %>
@@ -70,6 +81,8 @@
         type="password"
         id="password-conf"
         name="passwordConf"
+        required
+        minlength="8"
         placeholder="Confirm Password">
 
         <% if (locals.passwordConf && passwordConf.errorMsg) { %>

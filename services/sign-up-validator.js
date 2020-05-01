@@ -23,7 +23,7 @@ function validateSignUpForm() {
     }),
     check('password', 'Password must be at least 8 characters long')
     .isAlphanumeric().withMessage('Password must contain letters and numbers')
-    .isLength({ min: 2 }),
+    .isLength({ min: 8 }),
     check('passwordConf')
     .custom((value, { req }) => {
       if (value !== req.body.password) {
