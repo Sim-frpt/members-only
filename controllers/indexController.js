@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const Message = require('../models/message');
+const Privilege = require('../models/privilege');
 
 const { validationResult } = require('express-validator');
 
@@ -16,7 +17,7 @@ exports.home =  async (req, res, next) => {
       messages: results
     });
 
-  } catch(err) {
+  } catch (err) {
     return next(err);
   }
 };
@@ -44,13 +45,14 @@ exports.postSignUp = (req, res, next) => {
         value: req.body[property]
       };
     };
+
     // pass the error message to the data object
     errors.array().forEach(error => {
       data[error.param].errorMsg = error.msg;
     });
+
     const { firstName, lastName, email, password, passwordConf } = data;
 
-    console.log(data);
     return res.render('sign-up', {
       title: "Sign Up",
       firstName,
@@ -60,8 +62,23 @@ exports.postSignUp = (req, res, next) => {
       passwordConf
     });
   }
+  const basicPrivilege = Privilege.findOne({ name: 'basic' });
 
-  res.send(`not implemented yet: ${req.method} ${req.path}`);
+  basicPrivilege
+    .exec()
+    .then(privilege => {
+      const user = new User({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password: req.body.password,
+        status: privilege
+      });
+
+      return user.save();
+    })
+    .then(res.redirect('/'))
+    .catch( err => next(err));
 };
 
 exports.getLogIn = (req, res, next) => {
