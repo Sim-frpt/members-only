@@ -12,7 +12,12 @@
         id="firstName"
         name="firstName"
         placeholder="First Name"
-        value="<%= locals.firstName ? firstName : '' %>">
+        value="<%= locals.firstName ? firstName.value : '' %>">
+
+        <% if (locals.firstName && firstName.errorMsg) { %>
+          <%- include('components/invalid-form-feedback.ejs',
+            { error: firstName.errorMsg }) %>
+        <% } %>
     </div>
     <div class="form-group">
       <label for="lastName">Last Name</label>
@@ -22,7 +27,12 @@
         id="lastName"
         name="lastName"
         placeholder="Last Name"
-        value="<%= locals.lastName ? lastName : '' %>">
+        value="<%= locals.lastName ? lastName.value : '' %>">
+
+        <% if (locals.lastName && lastName.errorMsg) { %>
+          <%- include('components/invalid-form-feedback.ejs',
+            { error: lastName.errorMsg }) %>
+        <% } %>
     </div>
     <div class="form-group">
       <label for="email">Email adress</label>
@@ -32,7 +42,12 @@
         id="email"
         name="email"
         placeholder="Email"
-        value="<%= locals.email ? email : '' %>">
+        value="<%= locals.email ? email.value : '' %>">
+
+        <% if (locals.email && email.errorMsg) { %>
+          <%- include('components/invalid-form-feedback.ejs',
+            { error: email.errorMsg }) %>
+        <% } %>
     </div>
     <div class="form-group">
       <label for="password">Password</label>
@@ -42,6 +57,11 @@
         id="password"
         name="password"
         placeholder="Password">
+
+        <% if (locals.password && password.errorMsg) { %>
+          <%- include('components/invalid-form-feedback.ejs',
+            { error: password.errorMsg }) %>
+        <% } %>
     </div>
     <div class="form-group">
       <label for="password-conf">Confirm password</label>
@@ -51,6 +71,11 @@
         id="password-conf"
         name="passwordConf"
         placeholder="Confirm Password">
+
+        <% if (locals.passwordConf && passwordConf.errorMsg) { %>
+          <%- include('components/invalid-form-feedback.ejs',
+            { error: passwordConf.errorMsg }) %>
+        <% } %>
     </div>
     <button class="btn btn-primary" type="submit">Sign Up</button>
   </form>

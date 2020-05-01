@@ -34,19 +34,33 @@ exports.getSignUp = (req, res, next) => {
 // POST sign up form
 exports.postSignUp = (req, res, next) => {
   const errors = validationResult(req);
-  console.log(errors.array());
 
   if (!errors.isEmpty()) {
-    const { firstName, lastName, email } = req.body;
+    // Create an object that will contain each field of the form, with value
+    // and error message
+    const data = {};
+    for (let property in req.body) {
+      data[property] = {
+        value: req.body[property]
+      };
+    };
+    // pass the error message to the data object
+    errors.array().forEach(error => {
+      data[error.param].errorMsg = error.msg;
+    });
+    const { firstName, lastName, email, password, passwordConf } = data;
 
+    console.log(data);
     return res.render('sign-up', {
       title: "Sign Up",
       firstName,
       lastName,
       email,
-      //errors: errors.array()
+      password,
+      passwordConf
     });
   }
+
   res.send(`not implemented yet: ${req.method} ${req.path}`);
 };
 
