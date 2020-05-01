@@ -26,6 +26,10 @@ router.get('/log-in', indexController.getLogIn);
 // POST log in form
 router.post('/log-in', sessionController.authenticate, indexController.postLogIn);
 
+
+// GET log out
+router.get('/log-out', indexController.getLogOut);
+
 // GET message form
 router.get('/message', indexController.getMessage);
 

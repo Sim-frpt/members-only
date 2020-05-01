@@ -102,6 +102,12 @@ exports.postLogIn = (req, res, next) => {
 };
 
 
+// GET log out form
+exports.getLogOut = (req, res, next) => {
+  req.logout();
+  res.redirect('/');
+};
+
 exports.getMessage = (req, res, next) => {
   res.send(`not implemented yet: ${req.method} ${req.path}`);
 };
