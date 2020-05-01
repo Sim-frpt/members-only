@@ -15,7 +15,7 @@ function validateSignUpForm() {
     .trim(),
     check('email', 'Email must be valid')
     .isEmail()
-    .normalizeEmail()
+    .normalizeEmail({ gmail_remove_dots: false })
     .custom(async email => {
       if (await isMailAlreadyInUse(email)) {
         return Promise.reject('Email is already registered');
