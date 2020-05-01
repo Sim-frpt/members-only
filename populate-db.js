@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 // Get models
 const User = require('./models/user');
@@ -41,21 +42,29 @@ function createPrivilege(name) {
     .catch(err => console.error(err));
 }
 
-function createUser(fName, lName, email, password, status) {
-  const user = new User({
+async function createUser(fName, lName, email, password, status) {
+
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = new User({
     firstName: fName,
     lastName: lName,
     email: email,
-    password: password,
+    password: hashedPassword,
     status: status
-  });
+    });
 
-  return user.save()
-    .then(result => {
-      console.log('saved user', result);
-      users.push(result);
-    })
-    .catch(err => console.error(err));
+    return user.save()
+      .then(result => {
+        console.log('saved user', result);
+        users.push(result);
+      })
+  } catch (err) {
+    console.error(err);
+  }
+
+
 };
 
 function createMessage(title, text, author) {

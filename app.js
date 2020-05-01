@@ -35,7 +35,9 @@ passport.use(new LocalStrategy(
     usernameField: 'email',
   },
   function (email, password, done) {
-    User.findOne({ email: email }, function (err, user) {
+    const query = User.findOne({ email: email }).populate('status');
+
+    query.exec( function (err, user) {
       if (err) {
         return done(err);
       }
@@ -45,11 +47,16 @@ passport.use(new LocalStrategy(
       }
 
       bcrypt.compare(password, user.password, function (err, result) {
+
         if (err) {
           return done(err);
         }
 
-        return done(null, user);
+        if (result) {
+          return done(null, user);
+        }
+
+        return done(null, false, { msg: 'incorrect password' });
       });
     });
   }
