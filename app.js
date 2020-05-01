@@ -4,8 +4,13 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
+const session = require('express-session');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcrypt');
 
 const indexRouter = require('./routes/index');
+const User = require('./models/user');
 
 require('dotenv').config()
 
@@ -24,6 +29,42 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', console.log.bind(console, 'connected to db'));
 
+// Passport init
+passport.use(new LocalStrategy(
+  {
+    usernameField: 'email',
+  },
+  function (email, password, done) {
+    User.findOne({ email: email }, function (err, user) {
+      if (err) {
+        return done(err);
+      }
+
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username' });
+      }
+
+      bcrypt.compare(password, user.password, function (err, result) {
+        if (err) {
+          return done(err);
+        }
+
+        return done(null, user);
+      });
+    });
+  }
+));
+
+passport.serializeUser(function (user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function (id, done) {
+  User.findById(id, function (err, user) {
+    done(err, user);
+  });
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -33,11 +74,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-// redirect bootstrap JS, CSS and jQuery
-app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
-app.use('/js', express.static(__dirname + '/node_modules/jquery/dist'));
-app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
 

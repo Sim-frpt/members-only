@@ -70,7 +70,7 @@ exports.postSignUp = (req, res, next) => {
   const getBasicPrivilege = query.exec();
   const getHashedPassword = bcrypt.hash(req.body.password, 10);
 
-  Promise.all([getBasicPrivilege, getHashedPassword])
+  Promise.all([ getBasicPrivilege, getHashedPassword ])
     .then(results => {
       const status = results[0];
       const password = results[1];
@@ -89,10 +89,14 @@ exports.postSignUp = (req, res, next) => {
     .catch( err => next(err));
 };
 
+// GET log in form
 exports.getLogIn = (req, res, next) => {
-  res.send(`not implemented yet: ${req.method} ${req.path}`);
+  res.render('log-in', {
+    title: "Log In"
+  });
 };
 
+// POST log in
 exports.postLogIn = (req, res, next) => {
   res.send(`not implemented yet: ${req.method} ${req.path}`);
 };

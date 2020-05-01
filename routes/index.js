@@ -24,7 +24,7 @@ router.post('/sign-up', signUpValidator(), indexController.postSignUp);
 router.get('/log-in', indexController.getLogIn);
 
 // POST log in form
-router.get('/log-in', indexController.postLogIn);
+router.post('/log-in', sessionController.authenticate, indexController.postLogIn);
 
 // GET message form
 router.get('/message', indexController.getMessage);
