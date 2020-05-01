@@ -1,3 +1,6 @@
+const bcrypt = require('bcrypt');
+
+// Models
 const User = require('../models/user');
 const Message = require('../models/message');
 const Privilege = require('../models/privilege');
@@ -62,22 +65,27 @@ exports.postSignUp = (req, res, next) => {
       passwordConf
     });
   }
-  const basicPrivilege = Privilege.findOne({ name: 'basic' });
+  const query = Privilege.findOne({ name: 'basic' });
 
-  basicPrivilege
-    .exec()
-    .then(privilege => {
+  const getBasicPrivilege = query.exec();
+  const getHashedPassword = bcrypt.hash(req.body.password, 10);
+
+  Promise.all([getBasicPrivilege, getHashedPassword])
+    .then(results => {
+      const status = results[0];
+      const password = results[1];
+
       const user = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
-        password: req.body.password,
-        status: privilege
+        password,
+        status
       });
 
       return user.save();
     })
-    .then(res.redirect('/'))
+    .then(() => res.redirect('/'))
     .catch( err => next(err));
 };
 

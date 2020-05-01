@@ -16,10 +16,9 @@ if (!userArgs[0].startsWith('mongodb')) {
 
 mongoose.connect(userArgs[0], {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useCreateIndex: true
 });
-
-mongoose.set('useCreateIndex', true); // Allows me to remove a deprecation warning
 
 const db = mongoose.connection;
 
