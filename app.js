@@ -55,19 +55,18 @@ passport.use(new LocalStrategy( { usernameField: 'email' },
           return done(null, user);
         }
 
-        return done(null, false, { msg: 'incorrect password' });
+        return done(null, false, { message: 'Incorrect password' });
       });
     });
   }
 ));
 
 passport.serializeUser(function (user, done) {
-  debug(user);
   done(null, user.id);
 });
 
 passport.deserializeUser(function (id, done) {
-  User.findById(id)
+  User.findById(id, '-password')
     .populate('status')
     .exec((err, user) => {
       done(err, user);

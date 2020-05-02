@@ -8,6 +8,11 @@ const sessionController = require('../controllers/sessionController');
 // Validation
 const signUpValidator = require('../services/sign-up-validator');
 
+router.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
+
 // GET home page.
 router.get('/', indexController.home);
 
@@ -24,7 +29,7 @@ router.post('/sign-up', signUpValidator(), indexController.postSignUp);
 router.get('/log-in', indexController.getLogIn);
 
 // POST log in form
-router.post('/log-in', sessionController.authenticate, indexController.postLogIn);
+router.post('/log-in', sessionController.authenticate);
 
 // GET log out
 router.get('/log-out', indexController.getLogOut);

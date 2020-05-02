@@ -26,6 +26,10 @@
         name="password">
     </div>
 
+    <% if (locals.message) { %>
+      <%- include('components/invalid-form-feedback.ejs', { error: message }); %>
+    <% } %>
+
     <button type="submit" class="btn btn-primary">Log In</button>
   </form>
 </div>

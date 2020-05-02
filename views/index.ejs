@@ -1,7 +1,8 @@
 <%- include('base/header'); %>
-<%- include('base/navbar'); %>
+<%- include('base/navbar', { user: currentUser }); %>
 
-<%- include('components/heading'); %>
+<%- include('components/heading', { user: currentUser }); %>
+
 <div class="jumbotron">
   <h1 class="text-center mb-5">Latest posts</h1>
   <ul>

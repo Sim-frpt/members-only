@@ -66,6 +66,7 @@ exports.postSignUp = (req, res, next) => {
       passwordConf
     });
   }
+
   const query = Privilege.findOne({ name: 'basic' });
 
   const getBasicPrivilege = query.exec();
@@ -86,7 +87,7 @@ exports.postSignUp = (req, res, next) => {
 
       return user.save();
     })
-    .then(() => res.redirect('/'))
+    .then(() => res.redirect('/log-in'))
     .catch( err => next(err));
 };
 
@@ -96,12 +97,6 @@ exports.getLogIn = (req, res, next) => {
     title: "Log In"
   });
 };
-
-// POST log in
-exports.postLogIn = (req, res, next) => {
-  res.send(`not implemented yet: ${req.method} ${req.path}`);
-};
-
 
 // GET log out form
 exports.getLogOut = (req, res, next) => {
