@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const debug = require('debug')('members-only:indexController');
 
 // Models
 const User = require('../models/user');

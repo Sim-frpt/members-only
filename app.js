@@ -1,5 +1,6 @@
 const createError = require('http-errors');
 const express = require('express');
+const debug = require('debug')('members-only:server');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -26,16 +27,14 @@ mongoose.connect( process.env.MONGODB_URI, {
 
 const db = mongoose.connection;
 
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', console.log.bind(console, 'connected to db'));
+db.on('error', debug.bind(console, 'connection error'));
+db.once('open', debug.bind(console, 'connected to db'));
 
 // Passport init
-passport.use(new LocalStrategy(
-  {
-    usernameField: 'email',
-  },
+passport.use(new LocalStrategy( { usernameField: 'email' },
   function (email, password, done) {
-    const query = User.findOne({ email: email }).populate('status');
+
+    const query = User.findOne({ email: email });
 
     query.exec( function (err, user) {
       if (err) {
@@ -63,13 +62,16 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser(function (user, done) {
+  debug(user);
   done(null, user.id);
 });
 
 passport.deserializeUser(function (id, done) {
-  User.findById(id, function (err, user) {
-    done(err, user);
-  });
+  User.findById(id)
+    .populate('status')
+    .exec((err, user) => {
+      done(err, user);
+    });
 });
 
 // view engine setup
