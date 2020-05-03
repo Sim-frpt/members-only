@@ -1,3 +1,4 @@
+
 <%- include('base/header'); %>
 <%- include('base/navbar'); %>
 
@@ -50,7 +51,6 @@
         name="email"
         placeholder="Email"
         required
-
         value="<%= locals.email ? email.value : '' %>">
 
         <% if (locals.email && email.errorMsg) { %>

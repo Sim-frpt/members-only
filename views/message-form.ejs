@@ -1,0 +1,45 @@
+<%- include('base/header'); %>
+<%- include('base/navbar', { user: currentUser }); %>
+
+<%- include('components/heading', { user: currentUser }); %>
+
+<% console.log(locals.messageTitle, locals.text); %>
+<div class="container">
+  <form class="w-50 mx-auto" action="" method="POST">
+
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input
+        class="form-control"
+        type="text"
+        id="title"
+        placeholder="Title"
+        value="<%- locals.messageTitle ? messageTitle.value : ''; %>"
+        name="title">
+
+        <% if (locals.messageTitle && messageTitle.errorMsg) { %>
+          <%- include('components/invalid-form-feedback.ejs',
+            { error: messageTitle.errorMsg }) %>
+        <% } %>
+    </div>
+
+    <div class="form-group">
+      <label for="text">Text</label>
+      <textarea 
+        class="form-control"
+        id="text"
+        placeholder="Enter your message here"
+        rows="5"
+        name="text"><%- locals.text ? text.value : ''; %></textarea>
+
+        <% if (locals.text && text.errorMsg) { %>
+          <%- include('components/invalid-form-feedback.ejs',
+            { error: text.errorMsg }) %>
+        <% } %>
+    </div>
+
+    <button class="btn btn-primary">Post Message</button>
+  </form>
+</div>
+
+<%- include('base/footer'); %>

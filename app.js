@@ -34,7 +34,7 @@ db.once('open', debug.bind(console, 'connected to db'));
 passport.use(new LocalStrategy( { usernameField: 'email' },
   function (email, password, done) {
 
-    const query = User.findOne({ email: email });
+    const query = User.findOne().byMail(email);
 
     query.exec( function (err, user) {
       if (err) {

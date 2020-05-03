@@ -7,7 +7,9 @@ const sessionController = require('../controllers/sessionController');
 
 // Validation
 const signUpValidator = require('../services/sign-up-validator');
+const messageValidator = require('../services/message-validator');
 
+// Set currentUser variable to be the logged in user and make it accessible in all views
 router.use((req, res, next) => {
   res.locals.currentUser = req.user;
   next();
@@ -35,21 +37,22 @@ router.post('/log-in', sessionController.authenticate);
 router.get('/log-out', indexController.getLogOut);
 
 // GET message form
+// TODO get verifyLogInStatus back in here
 router.get('/message', indexController.getMessage);
 
 // POST message form
-router.post('/message', indexController.postMessage);
+router.post('/message', messageValidator(), indexController.postMessage);
 
 // GET members form
-router.get('/members', indexController.getMembers);
+router.get('/members', sessionController.verifyLogInStatus, indexController.getMembers);
 
 // POST members form
-router.post('/members', indexController.postMembers);
+router.post('/members', sessionController.verifyLogInStatus, indexController.postMembers);
 
 // GET admin form
-router.get('/admin', indexController.getAdmin);
+router.get('/admin', sessionController.verifyLogInStatus, indexController.getAdmin);
 
 // POST admin form
-router.post('/admin', indexController.postAdmin);
+router.post('/admin', sessionController.verifyLogInStatus, indexController.postAdmin);
 
 module.exports = router;

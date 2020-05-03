@@ -4,13 +4,13 @@ const User = require('../models/user');
 function validateSignUpForm() {
   return [
     check('firstName', 'First name must be between 2 and 30 characters')
-    .isLength({ min: 2, max: 30})
+    .isLength({ min: 2, max: 30 })
     .isAlpha().withMessage('First Name must contain only letters')
     .escape()
     .trim(),
     check('lastName', 'Last name must be between 2 and 50 characters')
     .isAlpha().withMessage('First Name must not contain numbers')
-    .isLength({ min: 2, max: 50})
+    .isLength({ min: 2, max: 50 })
     .escape()
     .trim(),
     check('email', 'Email must be valid')
