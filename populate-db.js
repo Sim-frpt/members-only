@@ -103,33 +103,33 @@ function createAllUsers() {
       'Charle',
       "d'Ailly",
       'charles.dailly@hotmail.com',
-      'dailly',
+      'password',
       privileges[0]
     ),
     createUser(
       'Catherine',
       'Rohan',
       'catherine.rohanne@gmail.com',
-      'rohan',
+      'password',
       privileges[0]
     ),
     createUser(
       'Jeanne',
       'Luyne',
       'jeanne.luyne@gmail.com',
-      'luyne',
+      'password',
       privileges[1]
     ),
     createUser(
       'Honoré',
       'Claude',
       'honore.claude@gmail.com',
-      'claude',
+      'password',
       privileges[1]
     ),
     createUser(
       'admin',
-      'root',
+      'password',
       'admin@root.com',
       'root',
       privileges[2]
