@@ -115,7 +115,6 @@ exports.postMessage = (req, res, next) => {
     //res.status(401).end();
   //}
 
-  const userTest = User.findOne().byMail('marie.courcillon@gmail.com');
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -144,9 +143,27 @@ exports.postMessage = (req, res, next) => {
     res.send('hello from post message');
   }
 
-  //userTest.then( result => {
-  //});
-  //res.send(`not implemented yet: ${req.method} ${req.path}`);
+  (async () => {
+    try {
+      const userTest = await User.findOne().byMail('marie.courcillon@gmail.com');
+
+      if (!userTest) {
+        throw new Error("User not found");
+      }
+
+      const message = new Message({
+        title: req.body.title,
+        text: req.body.text,
+        author: userTest
+      });
+
+      await message.save();
+      res.redirect('/');
+    } catch (err) {
+      next(err);
+    }
+
+  })()
 };
 
 exports.getMembers = (req, res, next) => {
