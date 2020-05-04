@@ -11,7 +11,8 @@ exports.authenticate = (req, res, next) => {
     if (!user) {
       return res.render('log-in', {
         title: "Log In",
-        message: info.message
+        message: info.message,
+        field: info.field
       });
     }
 

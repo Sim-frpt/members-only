@@ -15,6 +15,11 @@
         placeholder="Email"
         required
         name="email">
+
+      <% if (locals.field ==='email' && locals.message) { %>
+        <%- include('components/invalid-form-feedback.ejs', { error: message }); %>
+      <% } %>
+
     </div>
 
     <div class="form-group">
@@ -29,7 +34,7 @@
         name="password">
     </div>
 
-    <% if (locals.message) { %>
+    <% if (locals.field ==='password' && locals.message) { %>
       <%- include('components/invalid-form-feedback.ejs', { error: message }); %>
     <% } %>
 

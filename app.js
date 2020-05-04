@@ -32,32 +32,31 @@ db.once('open', debug.bind(console, 'connected to db'));
 
 // Passport init
 passport.use(new LocalStrategy( { usernameField: 'email' },
-  function (email, password, done) {
+  async (email, password, done) => {
 
-    const query = User.findOne().byMail(email);
-
-    query.exec( function (err, user) {
-      if (err) {
-        return done(err);
-      }
+    try {
+      const user = await User.findOne().byMail(email);
 
       if (!user) {
-        return done(null, false, { message: 'Incorrect username' });
+        return done(null, false, {
+          message: 'Incorrect username',
+          field: 'email'
+        });
       }
 
-      bcrypt.compare(password, user.password, function (err, result) {
+      const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
-        if (err) {
-          return done(err);
-        }
+      if (!isPasswordCorrect) {
+        return done(null, false, {
+          message: 'Incorrect password',
+          field: 'password'
+        });
+      }
 
-        if (result) {
-          return done(null, user);
-        }
-
-        return done(null, false, { message: 'Incorrect password' });
-      });
-    });
+      return done(null, user);
+    } catch (err) {
+      return done(err);
+    }
   }
 ));
 
