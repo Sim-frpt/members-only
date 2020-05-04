@@ -135,7 +135,7 @@ function createAllUsers() {
       'admin',
       'password',
       'admin@root.com',
-      'root',
+      'password',
       adminPrivilege
     )
   ]);

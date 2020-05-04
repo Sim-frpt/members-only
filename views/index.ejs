@@ -7,7 +7,7 @@
   <h1 class="text-center mb-5">Latest posts</h1>
   <ul>
     <% messages.forEach(message => { %>
-      <%- include('components/card', { message }) %>
+      <%- include('components/card', { message, user: currentUser }) %>
     <% }); %>
   </ul>
 </div>

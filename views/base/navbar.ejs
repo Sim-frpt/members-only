@@ -15,7 +15,7 @@
         <a class="nav-link" href="/about">About</a>
       </li>
 
-      <% if (!locals.user) { %>
+      <% if (!locals.currentUser) { %>
         <li class="nav-item">
           <a class="nav-link" href="/sign-up">Sign Up</a>
         </li>
@@ -23,11 +23,14 @@
           <a class="nav-link" href="/log-in">Log In</a>
         </li>
       <% } else { %>
+
+        <% if (locals.currentUser.status.name === 'basic') { %>
         <li class="nav-item">
           <a class="nav-link" href="/members">Membership</a>
         </li>
+        <% } %>
 
-        <% if (locals.user.status.name === 'member') { %>
+        <% if (locals.currentUser.status.name === 'member') { %>
           <li class="nav-item">
             <a class="nav-link" href="/admin">Admin</a>
           </li>

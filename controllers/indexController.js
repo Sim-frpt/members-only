@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const debug = require('debug')('members-only:indexController');
+const helpers = require('../helpers/privilege-updator');
 
 // Models
 const User = require('../models/user');
@@ -153,7 +154,8 @@ exports.postMessage = (req, res, next) => {
 // GET members form
 exports.getMembers = (req, res, next) => {
   res.render('members-form', {
-    title: 'Become a Member'
+    title: 'Become a Member',
+    formName: 'Member'
   });
 };
 
@@ -162,24 +164,34 @@ exports.postMembers = (req, res, next) => {
   if (req.body.password !== process.env.MEMBERS_PWD) {
     res.render('members-form', {
       title: 'Become a Member',
+      formName: 'Member',
       message: "That's not our password. Have you even been invited?"
     });
   }
 
-  const getPrivilege = Privilege.findOne({ name: 'member' });
-
-  getPrivilege
-    .then(status => {
-      return User.findByIdAndUpdate( req.user._id, { status: status }, { new: true });
-    })
+  helpers.updatePrivilege(req.user._id, 'member')
     .then(() => res.redirect('/'))
     .catch(err => next(err));
 };
 
+// GET admin form
 exports.getAdmin = (req, res, next) => {
-  res.send(`not implemented yet: ${req.method} ${req.path}`);
+  res.render('admin-form', {
+    title: 'Become Administrator',
+    formName: 'Admin'
+  });
 };
 
 exports.postAdmin = (req, res, next) => {
-  res.send(`not implemented yet: ${req.method} ${req.path}`);
+  if (req.body.password !== process.env.ADMIN_PWD) {
+    res.render('admin-form', {
+      title: 'Become Administrator',
+      formName: 'Admin',
+      message: "That's not the admin password!"
+    });
+  }
+
+  helpers.updatePrivilege(req.user._id, 'admin')
+    .then(() => res.redirect('/'))
+    .catch(err => next(err));
 };

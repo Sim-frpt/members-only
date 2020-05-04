@@ -1,0 +1,19 @@
+<div class="container">
+  <form class="w-50" action="" method="POST">
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        class="form-control"
+        name="password",
+        id="password",
+        placeholder="Password"
+        type="password">
+    </div>
+
+    <% if (locals.message) { %>
+      <%- include('./invalid-form-feedback.ejs', { error: message }); %>
+    <% } %>
+    <button class="btn btn-primary">Become <%= formName %></button>
+  </form>
+</div>
