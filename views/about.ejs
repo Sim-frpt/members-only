@@ -1,0 +1,31 @@
+<%- include('base/header'); %>
+<%- include('base/navbar'); %>
+
+<%- include('components/heading'); %>
+
+<div class="jumbotron">
+  <div class="container">
+    <h4 class="text-info mb-4">The rules of the Exclusive message board are pretty simple:</h4>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <h5 class="text-warning">If you're not signed up  or logged in:</h5>
+        <p>
+          You can see the message board, but not the author of the post or the time it's been posted.
+        </p>
+      </li>
+      <li class="list-group-item">
+        <h5 class="text-warning">If you're logged in, that does not mean you're a member yet!</h5>
+        <p>You can now create messages, but still can't see the author or the date of posted messages (I know it's a bit weird).</p>
+      </li>
+      <li class="list-group-item">
+        <h5 class="text-warning">If you visit <a href="/members">membership</a><small> (you have to be logged in to see the page)</small> and become a member</h5>
+        <p>You can now see all the information that was hidden from you, and even apply to become an admininstrator</p>
+      </li>
+      <li class="list-group-item">
+        <h5 class="text-warning">if you become administrator</h5>
+        <p>You can now delete posts</p>
+      </li>
+    </ul>
+  </div>
+</div>
+<%- include('base/footer'); %>

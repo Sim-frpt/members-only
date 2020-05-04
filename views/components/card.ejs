@@ -7,7 +7,8 @@
       <h4 class="card-title"><%= message.title %></h4>
       <p class="card-text"><%= message.text %></p>
       <% if (user && user.status.name === 'admin') { %>
-        <form action="/message/<%= message.id %>/delete" method="POST">
+        <form action="/message/delete" method="POST">
+          <input type="hidden" value="<%= message.id %>" name="messageId" />
           <button class="btn btn-danger">Delete</button>
         </form>
       <% } %>

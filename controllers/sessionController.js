@@ -31,6 +31,20 @@ exports.verifyLogInStatus = (req, res, next)  => {
   if (!req.user) {
     return next(createError(401, 'Please log in to view this page.'));
   }
-
   next();
 };
+
+exports.verifyMemberPrivilege = (req, res, next) => {
+  // easier than to check if it's 'member' or 'admin'
+  if (req.user.status.name === 'basic') {
+    return next(createError(403, "You don't have member privileges."));
+  }
+  next();
+}
+
+exports.verifyAdminPrivilege = (req, res, next) => {
+  if (req.user.status.name !== 'admin') {
+    return next(createError(403, "You don't have admin privileges."));
+  }
+  next();
+}

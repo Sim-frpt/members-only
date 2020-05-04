@@ -100,7 +100,7 @@ function createAllUsers() {
       'Marie',
       'Courcillon',
       'marie.courcillon@gmail.com',
-      'courcillon',
+      'password',
       basicPrivilege
     ),
     createUser(

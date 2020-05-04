@@ -29,7 +29,9 @@ exports.home =  async (req, res, next) => {
 
 // GET about page
 exports.getAbout = (req, res, next) => {
-  res.send(`not implemented yet: ${req.method} ${req.path}`);
+  res.render('about', {
+    title: "About"
+  });
 };
 
 // GET sign up form
@@ -151,6 +153,21 @@ exports.postMessage = (req, res, next) => {
     .catch(err => next(err));
 };
 
+// POST message deletion
+exports.postMessageDel = (req, res, next) => {
+  Message.findById(req.body.messageId)
+    .then(message => {
+
+      if (!message) {
+        throw new Error('Message not found');
+      }
+
+      Message.deleteOne(message)
+        .then(() => res.redirect('/'))
+    })
+    .catch(err => next(err));
+};
+
 // GET members form
 exports.getMembers = (req, res, next) => {
   res.render('members-form', {
@@ -182,6 +199,7 @@ exports.getAdmin = (req, res, next) => {
   });
 };
 
+// POST admin form
 exports.postAdmin = (req, res, next) => {
   if (req.body.password !== process.env.ADMIN_PWD) {
     res.render('admin-form', {

@@ -42,6 +42,10 @@ router.get('/message', sessionController.verifyLogInStatus, indexController.getM
 // POST message form
 router.post('/message', sessionController.verifyLogInStatus, messageValidator(), indexController.postMessage);
 
+// POST delete message
+router.post('/message/delete', sessionController.verifyLogInStatus,
+  sessionController.verifyAdminPrivilege, indexController.postMessageDel);
+
 // GET members form
 router.get('/members', sessionController.verifyLogInStatus, indexController.getMembers);
 
@@ -49,7 +53,8 @@ router.get('/members', sessionController.verifyLogInStatus, indexController.getM
 router.post('/members', sessionController.verifyLogInStatus, indexController.postMembers);
 
 // GET admin form
-router.get('/admin', sessionController.verifyLogInStatus, indexController.getAdmin);
+router.get('/admin', sessionController.verifyLogInStatus,
+  sessionController.verifyMemberPrivilege, indexController.getAdmin);
 
 // POST admin form
 router.post('/admin', sessionController.verifyLogInStatus, indexController.postAdmin);
