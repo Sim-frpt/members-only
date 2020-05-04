@@ -91,48 +91,52 @@ function createAllPrivileges() {
 }
 
 function createAllUsers() {
+  const basicPrivilege = privileges.find( privilege => privilege.name === 'basic');
+  const memberPrivilege = privileges.find( privilege => privilege.name === 'member');
+  const adminPrivilege = privileges.find( privilege => privilege.name === 'admin');
+
   return Promise.all([
     createUser(
       'Marie',
       'Courcillon',
       'marie.courcillon@gmail.com',
       'courcillon',
-      privileges[0]
+      basicPrivilege
     ),
     createUser(
       'Charle',
       "d'Ailly",
       'charles.dailly@hotmail.com',
       'password',
-      privileges[0]
+      basicPrivilege
     ),
     createUser(
       'Catherine',
       'Rohan',
       'catherine.rohanne@gmail.com',
       'password',
-      privileges[0]
+      basicPrivilege
     ),
     createUser(
       'Jeanne',
       'Luyne',
       'jeanne.luyne@gmail.com',
       'password',
-      privileges[1]
+      memberPrivilege
     ),
     createUser(
       'Honoré',
       'Claude',
       'honore.claude@gmail.com',
       'password',
-      privileges[1]
+      memberPrivilege
     ),
     createUser(
       'admin',
       'password',
       'admin@root.com',
       'root',
-      privileges[2]
+      adminPrivilege
     )
   ]);
 }
