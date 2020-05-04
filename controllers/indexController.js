@@ -104,17 +104,15 @@ exports.getLogOut = (req, res, next) => {
   res.redirect('/');
 };
 
+// GET message form
 exports.getMessage = (req, res, next) => {
   res.render('message-form', {
     title: 'New Message'
   });
 };
 
+// POST message form
 exports.postMessage = (req, res, next) => {
-  //if (!req.user) {
-    //res.status(401).end();
-  //}
-
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -139,31 +137,17 @@ exports.postMessage = (req, res, next) => {
       messageTitle,
       text
     });
-
-    res.send('hello from post message');
   }
 
-  (async () => {
-    try {
-      const userTest = await User.findOne().byMail('marie.courcillon@gmail.com');
+  const message = new Message({
+    title: req.body.title,
+    text: req.body.text,
+    author: req.user
+  });
 
-      if (!userTest) {
-        throw new Error("User not found");
-      }
-
-      const message = new Message({
-        title: req.body.title,
-        text: req.body.text,
-        author: userTest
-      });
-
-      await message.save();
-      res.redirect('/');
-    } catch (err) {
-      next(err);
-    }
-
-  })()
+  message.save()
+    .then(() => res.redirect('/'))
+    .catch(err => next(err));
 };
 
 exports.getMembers = (req, res, next) => {

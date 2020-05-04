@@ -3,11 +3,13 @@
 
   <% if (locals.template === 'index') { %>
     <h4 class="mb-3">The message board for <a href="/about">elite</a> individuals</h4>
-    <a class="btn btn-primary" href="/message">Write New Message</a>
+
     <% if (user) { %>
-      <p>Hello <%= user.firstName %>.</p>
+      <p>Hello <%= user.firstName %>,</p>
       <!--<a class="btn btn-primary" href="/message">Write New Message</a>-->
     <% } %>
+
+    <a class="btn btn-primary" href="/message">Write New Message</a>
   <% } %>
 
 </div>

@@ -37,11 +37,10 @@ router.post('/log-in', sessionController.authenticate);
 router.get('/log-out', indexController.getLogOut);
 
 // GET message form
-// TODO get verifyLogInStatus back in here
-router.get('/message', indexController.getMessage);
+router.get('/message', sessionController.verifyLogInStatus, indexController.getMessage);
 
 // POST message form
-router.post('/message', messageValidator(), indexController.postMessage);
+router.post('/message', sessionController.verifyLogInStatus, messageValidator(), indexController.postMessage);
 
 // GET members form
 router.get('/members', sessionController.verifyLogInStatus, indexController.getMembers);
