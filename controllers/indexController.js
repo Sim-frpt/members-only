@@ -150,12 +150,30 @@ exports.postMessage = (req, res, next) => {
     .catch(err => next(err));
 };
 
+// GET members form
 exports.getMembers = (req, res, next) => {
-  res.send(`not implemented yet: ${req.method} ${req.path}`);
+  res.render('members-form', {
+    title: 'Become a Member'
+  });
 };
 
+// POST members form
 exports.postMembers = (req, res, next) => {
-  res.send(`not implemented yet: ${req.method} ${req.path}`);
+  if (req.body.password !== process.env.MEMBERS_PWD) {
+    res.render('members-form', {
+      title: 'Become a Member',
+      message: "That's not our password. Have you even been invited?"
+    });
+  }
+
+  const getPrivilege = Privilege.findOne({ name: 'member' });
+
+  getPrivilege
+    .then(status => {
+      return User.findByIdAndUpdate( req.user._id, { status: status }, { new: true });
+    })
+    .then(() => res.redirect('/'))
+    .catch(err => next(err));
 };
 
 exports.getAdmin = (req, res, next) => {

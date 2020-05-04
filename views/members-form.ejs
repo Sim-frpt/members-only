@@ -1,0 +1,30 @@
+<%- include('base/header'); %>
+<%- include('base/navbar'); %>
+
+<%- include('components/heading'); %>
+
+<div class="container mb-5">
+  <h3 class="text-success mb-3">You wish to become a member of Exclusive?</h3>
+  <p>Understandable 😏. To do so, please enter our secret password in the field below. if you don't know it, you're not worthy yet!
+  </p>
+</div>
+<div class="container">
+  <form class="w-50" action="" method="POST">
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        class="form-control"
+        name="password",
+        id="password",
+        placeholder="Password"
+        type="password">
+    </div>
+
+    <% if (locals.message) { %>
+      <%- include('components/invalid-form-feedback.ejs', { error: message }); %>
+    <% } %>
+    <button class="btn btn-primary">Become Member</button>
+  </form>
+</div>
+<%- include('base/footer'); %>
