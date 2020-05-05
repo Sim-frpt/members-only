@@ -26,6 +26,9 @@ mongoose.connect( process.env.MONGODB_URI, {
   useUnifiedTopology: true,
   useCreateIndex: true,
   useFindAndModify: false
+}).catch(error => {
+  debug(error);
+  process.exit(1);
 });
 
 const db = mongoose.connection;
