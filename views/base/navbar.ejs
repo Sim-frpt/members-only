@@ -9,7 +9,7 @@
   <div class="collapse navbar-collapse" id="navbarColor01">
     <ul class="navbar-nav ml-auto mr-5">
       <li class="nav-item">
-        <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/">Home</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/about">About</a>
@@ -24,13 +24,13 @@
         </li>
       <% } else { %>
 
-        <% if (currentUser.status.name === 'basic') { %>
+        <% if (isBasic) { %>
         <li class="nav-item">
           <a class="nav-link" href="/members">Membership</a>
         </li>
         <% } %>
 
-        <% if (currentUser.status.name === 'member') { %>
+        <% if (isMember) { %>
           <li class="nav-item">
             <a class="nav-link" href="/admin">Admin</a>
           </li>

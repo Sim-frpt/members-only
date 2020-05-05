@@ -12,6 +12,11 @@ const messageValidator = require('../services/message-validator');
 // Set currentUser variable to be the logged in user and make it accessible in all views
 router.use((req, res, next) => {
   res.locals.currentUser = req.user;
+  if (req.user) {
+    res.locals.isBasic = req.user.status.name === 'basic' ? true : false;
+    res.locals.isMember = req.user.status.name === 'member' ? true : false;
+    res.locals.isAdmin = req.user.status.name === 'admin' ? true : false;
+  }
   next();
 });
 

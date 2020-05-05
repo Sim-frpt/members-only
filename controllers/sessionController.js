@@ -29,7 +29,7 @@ exports.authenticate = (req, res, next) => {
 
 exports.verifyLogInStatus = (req, res, next)  => {
   if (!req.user) {
-    return next(createError(401, 'Please log in to view this page.'));
+    res.redirect('log-in');
   }
   next();
 };

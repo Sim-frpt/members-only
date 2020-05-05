@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const debug = require('debug')('members-only:indexController');
-const helpers = require('../helpers/privilege-updator');
+const helpers = require('../helpers/helpers');
 
 // Models
 const User = require('../models/user');
@@ -36,7 +36,21 @@ exports.getAbout = (req, res, next) => {
 
 // GET sign up form
 exports.getSignUp = (req, res, next) => {
-  res.render('sign-up', { title: "Sign Up"});
+  // If validation fails, it redirects to this page with errors in session.errors
+  const didValidationFail = req.session.errors ? true : false;
+  const { firstName, lastName, email, password, passwordConf } = req.session.errors || '';
+
+  req.session.errors = null;
+
+  res.render('sign-up', {
+    title: "Sign Up",
+    didValidationFail,
+    firstName,
+    lastName,
+    email,
+    password,
+    passwordConf
+  });
 };
 
 // POST sign up form
@@ -44,34 +58,15 @@ exports.postSignUp = (req, res, next) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    // Create an object that will contain each field of the form, with value
-    // and error message
-    const data = {};
-    for (let property in req.body) {
-      data[property] = {
-        value: req.body[property]
-      };
-    };
+    // put all errors and values in an object in req.session
+    req.session.errors = helpers.getRichErrorObj(req, errors);
 
-    // pass the error message to the data object
-    errors.array().forEach(error => {
-      data[error.param].errorMsg = error.msg;
-    });
-
-    const { firstName, lastName, email, password, passwordConf } = data;
-
-    return res.render('sign-up', {
-      title: "Sign Up",
-      firstName,
-      lastName,
-      email,
-      password,
-      passwordConf
-    });
+    return res.redirect('sign-up');
   }
 
   const query = Privilege.findOne({ name: 'basic' });
 
+  // all users get basic status by default
   const getBasicPrivilege = query.exec();
   const getHashedPassword = bcrypt.hash(req.body.password, 10);
 
@@ -104,13 +99,23 @@ exports.getLogIn = (req, res, next) => {
 // GET log out form
 exports.getLogOut = (req, res, next) => {
   req.logout();
+  req.session.destroy();
   res.redirect('/');
 };
 
 // GET message form
 exports.getMessage = (req, res, next) => {
+  // If validation fails, it redirects to this page with errors in session.errors
+  const didValidationFail = req.session.errors ? true : false;
+  const { title: messageTitle, text } = req.session.errors || '';
+
+  req.session.errors = null;
+
   res.render('message-form', {
-    title: 'New Message'
+    title: 'New Message',
+    didValidationFail,
+    messageTitle,
+    text
   });
 };
 
@@ -119,27 +124,9 @@ exports.postMessage = (req, res, next) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    // Create an object that will contain each field of the form, with value
-    // and error message
-    const data = {};
-    for (let property in req.body) {
-      data[property] = {
-        value: req.body[property]
-      };
-    };
+    req.session.errors = helpers.getRichErrorObj(req, errors);
 
-    // pass the error message to the data object
-    errors.array().forEach(error => {
-      data[error.param].errorMsg = error.msg;
-    });
-
-    const { title: messageTitle, text } = data;
-
-    return res.render('message-form', {
-      title: "New Message",
-      messageTitle,
-      text
-    });
+    return res.redirect('/message');
   }
 
   const message = new Message({

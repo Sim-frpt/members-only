@@ -3,7 +3,6 @@
 
 <%- include('components/heading', { user: currentUser }); %>
 
-<% console.log(locals.messageTitle, locals.text); %>
 <div class="container">
   <form class="w-50 mx-auto" action="" method="POST">
 
@@ -14,10 +13,10 @@
         type="text"
         id="title"
         placeholder="Title"
-        value="<%- locals.messageTitle ? messageTitle.value : ''; %>"
+        value="<%- didValidationFail ? messageTitle.value : ''; %>"
         name="title">
 
-        <% if (locals.messageTitle && messageTitle.errorMsg) { %>
+        <% if (didValidationFail && messageTitle.errorMsg) { %>
           <%- include('components/invalid-form-feedback.ejs',
             { error: messageTitle.errorMsg }) %>
         <% } %>
@@ -30,9 +29,9 @@
         id="text"
         placeholder="Enter your message here"
         rows="5"
-        name="text"><%- locals.text ? text.value : ''; %></textarea>
+        name="text"><%- didValidationFail ? text.value : ''; %></textarea>
 
-        <% if (locals.text && text.errorMsg) { %>
+        <% if (didValidationFail && text.errorMsg) { %>
           <%- include('components/invalid-form-feedback.ejs',
             { error: text.errorMsg }) %>
         <% } %>

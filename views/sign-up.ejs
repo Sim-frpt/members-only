@@ -14,12 +14,9 @@
         id="firstName"
         name="firstName"
         placeholder="First Name"
-        required
-        minlength="2"
-        maxlength="30"
-        value="<%= locals.firstName ? firstName.value : '' %>">
+        value="<%= didValidationFail ? firstName.value : '' %>">
 
-        <% if (locals.firstName && firstName.errorMsg) { %>
+        <% if (didValidationFail && firstName.errorMsg) { %>
           <%- include('components/invalid-form-feedback.ejs',
             { error: firstName.errorMsg }) %>
         <% } %>
@@ -32,12 +29,9 @@
         id="lastName"
         name="lastName"
         placeholder="Last Name"
-        required
-        minlength="2"
-        maxlength="50"
-        value="<%= locals.lastName ? lastName.value : '' %>">
+        value="<%= didValidationFail ? lastName.value : '' %>">
 
-        <% if (locals.lastName && lastName.errorMsg) { %>
+        <% if (didValidationFail && lastName.errorMsg) { %>
           <%- include('components/invalid-form-feedback.ejs',
             { error: lastName.errorMsg }) %>
         <% } %>
@@ -50,10 +44,9 @@
         id="email"
         name="email"
         placeholder="Email"
-        required
-        value="<%= locals.email ? email.value : '' %>">
+        value="<%= didValidationFail ? email.value : '' %>">
 
-        <% if (locals.email && email.errorMsg) { %>
+        <% if (didValidationFail && email.errorMsg) { %>
           <%- include('components/invalid-form-feedback.ejs',
             { error: email.errorMsg }) %>
         <% } %>
@@ -65,11 +58,9 @@
         type="password"
         id="password"
         name="password"
-        required
-        minlength="8"
         placeholder="Password">
 
-        <% if (locals.password && password.errorMsg) { %>
+        <% if (didValidationFail && password.errorMsg) { %>
           <%- include('components/invalid-form-feedback.ejs',
             { error: password.errorMsg }) %>
         <% } %>
@@ -81,11 +72,9 @@
         type="password"
         id="password-conf"
         name="passwordConf"
-        required
-        minlength="8"
         placeholder="Confirm Password">
 
-        <% if (locals.passwordConf && passwordConf.errorMsg) { %>
+        <% if (didValidationFail && passwordConf.errorMsg) { %>
           <%- include('components/invalid-form-feedback.ejs',
             { error: passwordConf.errorMsg }) %>
         <% } %>
