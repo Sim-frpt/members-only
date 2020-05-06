@@ -1,4 +1,4 @@
-# members-only
+# Members-only
 
 This is a node/express backend project from [the Odin Project](https://www.theodinproject.com).  
 The goal was to setup a small message board with different levels of authorization and authentication.
